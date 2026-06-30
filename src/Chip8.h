@@ -16,6 +16,6 @@ private:
     uint16_t opcode;
 public:
     Chip8();
-    void LoadRom(char* filename);
+    void LoadRom(char const* filename);
 };
 
