@@ -3,7 +3,6 @@
 #include <fstream>
 const unsigned int START_ADDRESS=0x200;
 
-
 //initialize the pc
 Chip8::Chip8(){
     pc=START_ADDRESS;
