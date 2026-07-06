@@ -1,5 +1,6 @@
 //this header defines the chip8 class
 #include <cstdint>
+#include <random>
 
 class Chip8{
 private:
@@ -14,8 +15,10 @@ private:
     uint8_t keypad[16]{};
     uint32_t video[64*32]{};
     uint16_t opcode;
+    std::default_random_engine randGen;
+    std::uniform_int_distribution<uint8_t> randByte;
 public:
-    Chip8();
+    Chip8(); 
     void LoadRom(char const* filename);
 };
 
