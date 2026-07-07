@@ -17,6 +17,15 @@ private:
     uint16_t opcode;
     std::default_random_engine randGen;
     std::uniform_int_distribution<uint8_t> randByte;
+    void OP_00E0();//CLS
+    void OP_00EE();//RET
+    void OP_1nnn();//JP
+    void OP_2nnn();//CALL
+    void OP_3xkk();//SE Vx , byte
+    void OP_4xkk();//SNE Vx, byte
+    void OP_5xy0();//SNE Vx, Vy
+    
+    
 public:
     Chip8(); 
     void LoadRom(char const* filename);

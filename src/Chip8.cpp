@@ -4,6 +4,7 @@
 #include <endian.h>
 #include <fstream>
 #include <random>
+#include <string.h>
 const unsigned int START_ADDRESS=0x200;
 const unsigned int FONTSET_SIZE=80;
 uint8_t fontset[FONTSET_SIZE]={
@@ -62,4 +63,42 @@ void Chip8::LoadRom(char const* filename){
         
     }
     
+}
+void  Chip8::OP_00E0(){//CLS- clears the screen
+    memset(video,0,sizeof(video));
+}
+void Chip8::OP_00EE(){//RET-return from a subroutine
+    --sp;
+    pc=stack[sp];
+}
+void Chip8::OP_1nnn(){//JP- jump to location nnn
+    uint16_t address= opcode&0x0FFFu;//select the last three digits of the opcode
+    pc= address;
+}
+void Chip8::OP_2nnn(){//CALL subroutine at nnn
+    uint16_t address= opcode&0x0FFFu;
+    stack[sp]=pc;
+    ++sp;
+    pc=address;
+}
+void Chip8::OP_3xkk(){//SE Vx, byte (skip next instruction if Vx=kk)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t byte=opcode&0x00FFu;
+    if(registers[Vx]==byte){
+        pc+=2;
+    }
+}
+void Chip8::OP_4xkk(){// SNE Vx, byte (skip next instruction if Vx!=kk)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t byte=opcode&0x00FFu;
+    if(registers[Vx]!=byte){
+        pc+=2;
+    }
+}
+void Chip8::OP_5xy0(){//SE Vx, Vy(skip next instruction if Vx==Vy)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    if(registers[Vx]==registers[Vy]){
+        pc+=2;
+    }
 }
