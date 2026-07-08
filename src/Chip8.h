@@ -24,6 +24,16 @@ private:
     void OP_3xkk();//SE Vx , byte
     void OP_4xkk();//SNE Vx, byte
     void OP_5xy0();//SNE Vx, Vy
+    void OP_6xkk();//LD Vx,byte
+    void OP_7xkk();//ADD Vx,byte
+    void OP_8xy0();//LD Vx,Vy
+    void OP_8xy1();//OR Vx,Vy
+    void OP_8xy2();//AND Vx,Vy
+    void OP_8xy3();//XOR Vx,Vy
+    void OP_8xy4();//ADD Vx,Vy
+    void OP_8xy5();//SUB Vx,Vy
+    void OP_8xy6();//SHR Vx;
+    void OP_8xy7();//SUBN Vx,Vy
     
     
 public:

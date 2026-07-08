@@ -102,3 +102,57 @@ void Chip8::OP_5xy0(){//SE Vx, Vy(skip next instruction if Vx==Vy)
         pc+=2;
     }
 }
+void Chip8::OP_6xkk(){//LD Vx,byte (set Vx=kk)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t byte=(opcode&0x00u);
+    registers[Vx]=byte;
+}
+void Chip8::OP_7xkk(){//ADD Vx, byte (Vx+=kk)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;;
+    uint8_t byte=opcode&0x00FFu;
+    registers[Vx]+=byte;
+}
+void Chip8::OP_8xy0(){//LD Vx,Vy (set Vx=Vy)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    registers[Vx]=registers[Vy];
+}
+void Chip8::OP_8xy1(){//OR Vx,Vy (set Vx=Vx OR Vy)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    registers[Vx]|=registers[Vy];
+}
+void Chip8::OP_8xy2(){//AND Vx,Vy (set Vx=Vx AND Vy)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    registers[Vx]&=registers[Vy];
+}
+void Chip8::OP_8xy3(){//XOR Vx,Vy (set Vx=Vx XOR Vy)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    registers[Vx]^=registers[Vy];
+}
+void Chip8::OP_8xy4(){//ADD Vx,Vy (set Vx=Vx+Vy, VF=carry)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    uint16_t sum=registers[Vx]+registers[Vy];
+    registers[0xF]=sum>0x00FFu?1:0;
+    registers[Vx]=sum&0x00FFu;
+}
+void Chip8::OP_8xy5(){//SUB Vx,Vy (set Vx=Vx-Vy, VF=NOT borrow)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    registers[0xF]=registers[Vx]>registers[Vy]?1:0;
+    registers[Vx]-=registers[Vy];
+}
+void Chip8::OP_8xy6(){//SHR Vx (set VF=least significant bit of Vx, Vx>>=1)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    registers[0xF]=registers[Vx]&0x1u;
+    registers[Vx]>>=1;
+}
+void Chip8::OP_8xy7(){//SUBN Vx,Vy (set Vx=Vy-Vx, VF=NOT borrow)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    registers[0xF]=registers[Vy]>registers[Vx]?1:0;
+    registers[Vx]=registers[Vy]-registers[Vx];
+}
