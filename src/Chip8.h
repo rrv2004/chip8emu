@@ -34,8 +34,10 @@ private:
     void OP_8xy5();//SUB Vx,Vy
     void OP_8xy6();//SHR Vx;
     void OP_8xy7();//SUBN Vx,Vy
-    
-    
+    void OP_8xyE();//SHL Vx
+    void OP_9xy0();//SNE Vx, Vy
+
+
 public:
     Chip8(); 
     void LoadRom(char const* filename);

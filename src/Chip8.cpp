@@ -156,3 +156,15 @@ void Chip8::OP_8xy7(){//SUBN Vx,Vy (set Vx=Vy-Vx, VF=NOT borrow)
     registers[0xF]=registers[Vy]>registers[Vx]?1:0;
     registers[Vx]=registers[Vy]-registers[Vx];
 }
+void Chip8::OP_8xyE(){//SHL Vx (set VF=most significant bit of Vx, Vx<<=1)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    registers[0xF]=(registers[Vx]&0x80u)>>7u;
+    registers[Vx]<<=1;
+}
+void Chip8::OP_9xy0(){//SNE Vx,Vy (skip next instruction if Vx!=Vy)
+    uint8_t Vx=(opcode&0x0F00u)>>8u;
+    uint8_t Vy=(opcode&0x00F0u)>>4u;
+    if(registers[Vx]!=registers[Vy]){
+        pc+=2;
+    }
+}
