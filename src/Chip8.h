@@ -36,6 +36,8 @@ private:
     void OP_8xy7();//SUBN Vx,Vy
     void OP_8xyE();//SHL Vx
     void OP_9xy0();//SNE Vx, Vy
+    void OP_Annn();//LD I, addr
+    void OP_Bnnn();//JP V0, addr
 
 
 public:

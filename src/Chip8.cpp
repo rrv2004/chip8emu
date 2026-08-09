@@ -168,3 +168,11 @@ void Chip8::OP_9xy0(){//SNE Vx,Vy (skip next instruction if Vx!=Vy)
         pc+=2;
     }
 }
+void Chip8::OP_Annn(){//LD I, addr (set I=nnn)
+    uint16_t address=opcode&0x0FFFu;
+    index_register=address;
+}
+void Chip8::OP_Bnnn(){//JP V0, addr (jump to location nnn+V0)
+    uint16_t address=opcode&0x0FFFu;
+    pc=registers[0]+address;
+}
